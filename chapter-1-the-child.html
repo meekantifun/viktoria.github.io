@@ -72,6 +72,49 @@
   .icon-btn:hover{ color:var(--bone); }
   .icon-btn.active{ color:var(--red-bright); filter:drop-shadow(0 0 6px rgba(179,32,42,0.7)); }
   .icon-btn svg{ width:16px; height:16px; }
+
+  /* ── CHAPTER HERO ── */
+  .chapter-hero{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:420px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-left{
+    display:flex; flex-direction:column; justify-content:center;
+    padding:60px 48px 60px var(--edge-pad);
+    position:relative; z-index:2;
+  }
+  .chapter-number{
+    font-weight:300; font-size:28px;
+    color:var(--bone-dim); letter-spacing:0.1em;
+    margin-bottom:4px;
+  }
+  .chapter-title{
+    font-family:'IM Fell English', serif;
+    font-size:72px; color:var(--bone); line-height:1;
+    margin-bottom:20px;
+  }
+  .chapter-divider{ display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+  .chapter-divider .cdline{ flex:1; max-width:60px; height:1px; background:var(--red); }
+  .chapter-divider .cddiamond{ width:6px; height:6px; background:var(--red); transform:rotate(45deg); }
+  .chapter-quote{
+    font-style:italic; font-weight:300; font-size:17px;
+    color:var(--bone-dim); line-height:1.6; max-width:300px;
+  }
+  .hero-right{ position:relative; border-left:1px solid var(--line); overflow:hidden; }
+  .hero-right img{ width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+  .hero-right-empty{
+    width:100%; height:100%; min-height:420px;
+    background:linear-gradient(160deg,#1a0a0a,#0d0505 40%,#0a0d12);
+  }
+  .chapter-hero::before,.chapter-hero::after{
+    content:''; position:absolute; top:0; bottom:0; width:40px; z-index:1; pointer-events:none;
+  }
+  .chapter-hero::before{ left:0; background:linear-gradient(to right,rgba(140,20,20,0.15),transparent); }
+  .chapter-hero::after{ right:0; background:linear-gradient(to left,rgba(140,20,20,0.15),transparent); }
 </style>
 </head>
 <body>
@@ -106,7 +149,31 @@
 </header>
 
 <main>
-  <!-- Hero added in Task 4 -->
+
+  <section class="chapter-hero">
+    <div class="hero-left">
+      <div class="chapter-number">I.</div>
+      <h1 class="chapter-title">The Child</h1>
+      <div class="chapter-divider">
+        <span class="cdline"></span>
+        <span class="cddiamond"></span>
+        <span class="cdline"></span>
+      </div>
+      <p class="chapter-quote">"All were born as blank pages.<br>Fate simply decides whose story<br>is worth writing."</p>
+    </div>
+    <div class="hero-right">
+      <!--
+        When you have a hero image, replace hero-right-empty with:
+        <img src="Pics n Stuff/your-hero-image.jpg" alt="Chapter I — The Child">
+      -->
+      <div class="hero-right-empty"></div>
+    </div>
+  </section>
+
+  <div class="chapter-sections">
+    <!-- Entry sections added in Task 5 -->
+  </div>
+
 </main>
 
 <script>
