@@ -333,6 +333,7 @@ document.querySelector('.brand a').addEventListener('click', e=>{
   }
 
   loadNext();
+  // Also try immediate autoplay (works if browser permits)
   audio.play().then(()=>{
     playing = true;
     musicBtn.classList.add('active');
@@ -341,6 +342,7 @@ document.querySelector('.brand a').addEventListener('click', e=>{
     iconPause.style.display = '';
   }).catch(()=>{});
 
+  // Play on first interaction anywhere on the page
   document.addEventListener('click', ()=>{ startMusic(); }, { once: true });
 
   musicBtn.addEventListener('click', ()=>{
@@ -349,7 +351,7 @@ document.querySelector('.brand a').addEventListener('click', e=>{
     musicBtn.setAttribute('aria-pressed', playing);
     iconPlay.style.display  = playing ? 'none' : '';
     iconPause.style.display = playing ? ''     : 'none';
-    if(playing){ audio.play(); } else { audio.pause(); }
+    if(playing){ audio.play().catch(()=>{}); } else { audio.pause(); }
   });
 
   muteBtn.addEventListener('click', ()=>{
