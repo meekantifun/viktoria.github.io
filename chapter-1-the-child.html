@@ -286,5 +286,79 @@ document.querySelector('.brand a').addEventListener('click', e=>{
 });
 </script>
 
+<script>
+/* ── background music (shuffled playlist) ── */
+(function(){
+  const audio    = document.getElementById('bg-audio');
+  audio.volume   = 0.5;
+  let playing    = false;
+  const musicBtn = document.getElementById('musicToggle');
+  const muteBtn  = document.getElementById('muteToggle');
+  const iconPlay  = musicBtn.querySelector('.icon-play');
+  const iconPause = musicBtn.querySelector('.icon-pause');
+
+  const TRACKS = [
+    'Pics%20n%20Stuff/Arlecchino%20House%20of%20Hearth%20Theme%20(Caliginous%20Hearthfire)%20%20Genshin%20Impact.mp3',
+    'Pics%20n%20Stuff/Elogia%20Cinerosa.mp3',
+    'Pics%20n%20Stuff/Revised%20Requiem.mp3',
+    'Pics%20n%20Stuff/Sinister%20Mist.mp3'
+  ];
+
+  function shuffle(arr){
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  let queue = [];
+  function loadNext(){
+    if(queue.length === 0) queue = shuffle([...TRACKS]);
+    audio.src = queue.pop();
+    audio.load();
+  }
+
+  audio.addEventListener('ended', ()=>{ loadNext(); audio.play().catch(()=>{}); });
+
+  function startMusic(){
+    if(playing) return;
+    playing = true;
+    musicBtn.classList.add('active');
+    musicBtn.setAttribute('aria-pressed', true);
+    iconPlay.style.display  = 'none';
+    iconPause.style.display = '';
+    if(!audio.src) loadNext();
+    audio.play().catch(()=>{});
+  }
+
+  loadNext();
+  audio.play().then(()=>{
+    playing = true;
+    musicBtn.classList.add('active');
+    musicBtn.setAttribute('aria-pressed', true);
+    iconPlay.style.display  = 'none';
+    iconPause.style.display = '';
+  }).catch(()=>{});
+
+  document.addEventListener('click', ()=>{ startMusic(); }, { once: true });
+
+  musicBtn.addEventListener('click', ()=>{
+    playing = !playing;
+    musicBtn.classList.toggle('active', playing);
+    musicBtn.setAttribute('aria-pressed', playing);
+    iconPlay.style.display  = playing ? 'none' : '';
+    iconPause.style.display = playing ? ''     : 'none';
+    if(playing){ audio.play(); } else { audio.pause(); }
+  });
+
+  muteBtn.addEventListener('click', ()=>{
+    audio.muted = !audio.muted;
+    muteBtn.classList.toggle('active', !audio.muted);
+    muteBtn.setAttribute('aria-pressed', audio.muted);
+  });
+})();
+</script>
+
 </body>
 </html>
