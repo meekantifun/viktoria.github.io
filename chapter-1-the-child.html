@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I. The Child — The House of the Ember</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after{ box-sizing:border-box; margin:0; padding:0; }
+
+  :root{
+    --bg:#0a0808;
+    --red:#b3202a;
+    --red-bright:#d93030;
+    --bone:#e8dcc8;
+    --bone-dim:#a09070;
+    --line:rgba(90,32,32,0.4);
+    --nav-h:48px;
+    --edge-pad:64px;
+  }
+
+  @keyframes pageFadeIn{ from{ opacity:0; } to{ opacity:1; } }
+
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg); color:var(--bone);
+    font-family:'Cormorant Garamond', serif;
+    line-height:1.7;
+    animation: pageFadeIn 0.4s ease forwards;
+  }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── NAV ── */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    height:var(--nav-h);
+    background:rgba(10,8,8,0.92);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(8px);
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    padding:0 24px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:8px;
+    padding-right:16px;
+    border-right:1px solid var(--line);
+  }
+  .brand span{ font-size:11px; letter-spacing:0.16em; color:var(--bone); white-space:nowrap; }
+  .chapters-banner{ justify-self:center; display:flex; align-items:center; overflow:hidden; }
+  .chapters{ display:flex; align-items:center; list-style:none; }
+  .chapters li{
+    font-size:10.5px; letter-spacing:0.1em; color:var(--bone-dim);
+    white-space:nowrap; padding:0 12px;
+    border-right:1px solid var(--line);
+  }
+  .chapters li:first-child{ border-left:1px solid var(--line); }
+  .chapters li a{ transition:color 0.25s ease; }
+  .chapters li a:hover{ color:var(--red-bright); }
+  .chapters li.active a{ color:var(--red-bright); }
+  .nav-right{ justify-self:end; display:flex; align-items:center; gap:14px; }
+  .icon-btn{
+    background:none; border:none; cursor:pointer; color:var(--bone-dim);
+    width:20px; height:20px; display:flex; align-items:center; justify-content:center;
+    transition:color 0.25s ease, filter 0.25s ease;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,0.9));
+  }
+  .icon-btn:hover{ color:var(--bone); }
+  .icon-btn.active{ color:var(--red-bright); filter:drop-shadow(0 0 6px rgba(179,32,42,0.7)); }
+  .icon-btn svg{ width:16px; height:16px; }
+</style>
+</head>
+<body>
+
+<audio id="bg-audio" preload="auto" style="display:none"></audio>
+
+<header class="nav">
+  <div class="brand">
+    <a href="index.html"><span>THE HOUSE OF THE EMBER</span></a>
+  </div>
+  <div class="chapters-banner">
+    <ul class="chapters">
+      <li class="active"><a href="chapter-1-the-child.html">I. THE CHILD</a></li>
+      <li><a href="chapter-2-the-crucible.html">II. THE CRUCIBLE</a></li>
+      <li><a href="chapter-3-the-knave.html">III. THE KNAVE</a></li>
+      <li><a href="chapter-4-the-new-house.html">IV. THE NEW HOUSE</a></li>
+      <li><a href="chapter-5-the-children.html">V. THE CHILDREN</a></li>
+      <li><a href="chapter-6-the-fatui.html">VI. THE FATUI</a></li>
+      <li><a href="chapter-7-the-knave.html">VII. THE KNAVE</a></li>
+      <li><a href="chapter-8-the-flame.html">VIII. THE FLAME</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <button class="icon-btn" id="musicToggle" title="Toggle music" aria-pressed="false">
+      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+    </button>
+    <button class="icon-btn active" id="muteToggle" title="Mute" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- Hero added in Task 4 -->
+</main>
+
+<script>
+let _navigating = false;
+function navigateTo(url){
+  if(_navigating) return;
+  _navigating = true;
+  document.body.style.transition = 'opacity 0.3s ease';
+  document.body.style.opacity = '0';
+  setTimeout(()=>{ window.location.href = url; }, 300);
+}
+document.querySelectorAll('.chapters a[href$=".html"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    navigateTo(a.getAttribute('href'));
+  });
+});
+document.querySelector('.brand a').addEventListener('click', e=>{
+  e.preventDefault();
+  navigateTo('index.html');
+});
+</script>
+
+</body>
+</html>
